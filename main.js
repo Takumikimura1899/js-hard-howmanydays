@@ -1,11 +1,13 @@
 const dateSet = document.getElementById("dateSet");
 const dateSearch = document.getElementById("dateSearch");
 const diffTime = document.getElementById("diffTime");
+// diffTimeを非表示にしている。
+diffTime.style.display = "none";
 
 const func2 = function () {
   // 現在の時間を取得
   let nowtime3 = moment();
-  //カレンダーから取得した日付をmoment.jsで使用出来るように変換
+  //カレンダーから日付をmoment.jsで使用出来るように取得
   const dateSetValue = moment(dateSet.value);
   //現在の時間とカレンダーから取得した日付の差を秒単位で取得する。
   const num2 = dateSetValue.diff(nowtime3, "seconds");
@@ -15,11 +17,16 @@ const func2 = function () {
   let timeM = Math.floor(((num2 % (24 * 60 * 60)) % (60 * 60)) / 60);
   let timeS = ((num2 % (24 * 60 * 60)) % (60 * 60)) % 60;
   let timeDHMS = timeD + "日" + timeH + "時間" + timeM + "分" + timeS + "秒";
-  // 変換した時間を表示する。
+  // 変換した時間を書き込む。
   diffTime.innerHTML = dateSet.value + "まで後" + timeDHMS;
-  setInterval(func2, 1000);
 };
-dateSearch.addEventListener("click", func2);
+
+// 検索ボタンを押した時にdiffTimeが表示されるようにする。
+dateSearch.addEventListener("click", () => {
+  diffTime.style.display = "block";
+});
+// 時間の計算を1秒ごとに行う処理
+setInterval(func2, 1000);
 
 // <div>を作成
 const text = document.createElement("div");
